@@ -1,0 +1,28 @@
+#!/bin/bash
+# http://php.net/mirroring.php
+
+LOCKFILE=/tmp/php.net-mirror.lock
+
+if [[ ! -e $LOCKFILE ]]; then
+    touch $LOCKFILE
+
+    rsync -avzC                           \
+          --no-p                          \
+          --human-readable                \
+          --delete                        \
+          --delete-after                  \
+          --include='distributions/*.exe' \
+          {{ php_mirror_source }} {{ mirror_doc_root }}
+    find {{ mirror_doc_root }} -type d \-exec chmod 755 {} \; 2>&1 >/dev/null
+    rm $LOCKFILE
+else
+    cat <<EOF 1>&2
+ERROR: Another rsync is already running and has the lock file
+$LOCKFILE.
+
+This might be normal if there is a bug update coming
+through. The rsync might take several hours and the lock file has
+correctly prevented two rsyncs from happening at the same time.
+EOF
+
+fi
