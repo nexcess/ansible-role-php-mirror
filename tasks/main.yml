@@ -15,5 +15,5 @@
     hour="{{ php_mirror_cron_hour }}"
     user="{{ mirror_unix_user }}"
     state="present"
-    job="{{ mirror_cron_dir }}/php-mirror"
+    job="{{ mirror_cron_dir }}/php-mirror >/dev/null 2>&1"
     disabled="{{ php_mirror_cron_disabled }}"

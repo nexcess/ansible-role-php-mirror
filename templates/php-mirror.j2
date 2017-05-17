@@ -13,6 +13,11 @@ if [[ ! -e $LOCKFILE ]]; then
           --delete-after                  \
           --include='distributions/*.exe' \
           {{ php_mirror_source }} {{ mirror_doc_root }}
+
+    if [[ $? -eq 0 ]]; then
+        echo `date +%s` > {{ mirror_timestamp_dir }}/php
+    fi
+
     find {{ mirror_doc_root }} -type d \-exec chmod 755 {} \; 2>&1 >/dev/null
     rm $LOCKFILE
 else
