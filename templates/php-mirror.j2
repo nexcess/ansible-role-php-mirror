@@ -12,7 +12,9 @@ if [[ ! -e $LOCKFILE ]]; then
           --delete                        \
           --delete-after                  \
           {% if nex_env == 'dev' %}
-          --exclude='distributions/*      \
+          --exclude='distributions/*'     \
+          --exclude='*.gz'                \
+          --exclude='*.bz2'               \
           {% else %}
           --include='distributions/*.exe' \
           {% endif %}
