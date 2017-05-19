@@ -11,7 +11,11 @@ if [[ ! -e $LOCKFILE ]]; then
           --human-readable                \
           --delete                        \
           --delete-after                  \
+          {% if nex_env == 'dev' %}
+          --exclude='distributions/*      \
+          {% else %}
           --include='distributions/*.exe' \
+          {% endif %}
           {{ php_mirror_source }} {{ mirror_doc_root }}
 
     if [[ $? -eq 0 ]]; then
