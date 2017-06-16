@@ -11,6 +11,7 @@ if [[ ! -e $LOCKFILE ]]; then
           --human-readable                \
           --delete                        \
           --delete-after                  \
+          --timeout=10800                 timeout the rsync command\
           {% if nex_env == 'dev' %}
           --exclude='distributions/*'     \
           --exclude='*.gz'                \
